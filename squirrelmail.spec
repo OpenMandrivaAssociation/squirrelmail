@@ -17,13 +17,13 @@
 
 Summary:	Squirrelmail is a webmail client for PHP4
 Name:		squirrelmail
-Version:	1.4.9a
-Release:	%mkrel 4
+Version:	1.4.10a
+Release:	%mkrel 1
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
-Source0:	http://prdownloads.sf.net/squirrelmail/%{name}-%{version}.tar.bz2
-Source1:	all_locales-1.4.9-%{locale_stamp}.tar.bz2
+Source0:	http://prdownloads.sf.net/squirrelmail/%{name}-%{version}.tar.gz
+Source1:	http://prdownloads.sf.net/squirrelmail/all_locales-1.4.9-%{locale_stamp}.tar.gz
 Source2:	squirrelmail-RPM.readme
 Source3:	http://www.squirrelmail.org/plugins/address_add-2.1-1.4.0.tar.bz2
 Source4:	http://www.squirrelmail.org/plugins/block_sender.2.02-1.4.0.tar.bz2
@@ -1462,5 +1462,3 @@ fi
 
 %files ka -f ka.list
 %defattr(-,root,root)
-
-

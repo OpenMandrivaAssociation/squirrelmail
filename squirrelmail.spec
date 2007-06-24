@@ -18,7 +18,7 @@
 Summary:	Squirrelmail is a webmail client for PHP4
 Name:		squirrelmail
 Version:	1.4.10a
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
@@ -69,9 +69,9 @@ Patch18:	squirrelmail-sieve_syntax_error.patch
 Requires(pre): rpm-helper
 Requires(postun): rpm-helper
 Requires(pre):  apache-conf >= 2.0.54
-Requires(pre):  apache-mpm-prefork >= 2.0.54
+Requires(pre):  apache-mpm >= 2.0.54
 Requires:	apache-conf >= 2.0.54
-Requires:	apache-mpm-prefork >= 2.0.54
+Requires:	apache-mpm >= 2.0.54
 Requires:	apache-mod_php
 Requires:	sendmail-command
 Requires:	aspell

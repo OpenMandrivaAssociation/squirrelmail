@@ -17,7 +17,7 @@
 
 Summary:	Squirrelmail is a webmail client for PHP4
 Name:		squirrelmail
-Version:	1.4.11
+Version:	1.4.13
 Release:	%mkrel 1
 License:	GPL
 Group:		System/Servers
@@ -1267,6 +1267,7 @@ fi
 %{basedir}/plugins/bug_report
 %{basedir}/plugins/calendar
 %{basedir}/plugins/delete_move_next
+%{basedir}/plugins/demo
 %{basedir}/plugins/filters
 %{basedir}/plugins/fortune
 %{basedir}/plugins/info
@@ -1277,6 +1278,7 @@ fi
 %{basedir}/plugins/sent_subfolders
 %{basedir}/plugins/spamcop
 %{basedir}/plugins/squirrelspell
+%{basedir}/plugins/test
 %{basedir}/plugins/translate
 # added plugins
 %{basedir}/plugins/abook_import_export

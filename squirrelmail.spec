@@ -85,7 +85,6 @@ Requires:	tmpwatch >= 2.8
 Requires(post):	ccp >= 0.4.0
 BuildRequires:	dos2unix
 BuildArch:	noarch
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 SquirrelMail is a standards-based webmail package written in PHP4. It

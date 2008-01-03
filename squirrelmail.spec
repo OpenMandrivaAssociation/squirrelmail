@@ -1,4 +1,4 @@
-%define mod_conf 73_squirrelmail.conf
+%define mod_conf squirrelmail.conf
 
 # helps to find new languages
 %define _unpackaged_files_terminate_build 0
@@ -18,7 +18,7 @@
 Summary:	Squirrelmail is a webmail client for PHP4
 Name:		squirrelmail
 Version:	1.4.13
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
@@ -1042,8 +1042,8 @@ cp -rp po %{buildroot}%{basedir}
 install -m 0755 contrib/RPM/squirrelmail.cron %{buildroot}/%{crondir}
 
 cat <<EOF > %{mod_conf}
+# squirrelmail.conf
 
-Alias /webmail %{basedir}
 Alias /%{name} %{basedir}
 
 <Directory %{basedir}>

@@ -15,7 +15,7 @@
 
 %define locale_stamp 20070106
 
-Summary:	Squirrelmail is a webmail client for PHP4
+Summary:	Webmail client for PHP4
 Name:		squirrelmail
 Version:	1.4.13
 Release:	%mkrel 2

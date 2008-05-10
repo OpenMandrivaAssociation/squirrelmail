@@ -13,39 +13,39 @@
 # Plugin config files
 %define pluginetc %{etcdir}/plugins
 
-%define locale_stamp 20070106
+%define locale_stamp 20071220
 
 Summary:	Webmail client for PHP4
 Name:		squirrelmail
 Version:	1.4.13
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
-Source0:	http://prdownloads.sf.net/squirrelmail/%{name}-%{version}.tar.gz
-Source1:	http://prdownloads.sf.net/squirrelmail/all_locales-1.4.9-%{locale_stamp}.tar.gz
+Source0:	http://prdownloads.sf.net/squirrelmail/%{name}-%{version}.tar.bz2
+Source1:	http://prdownloads.sf.net/squirrelmail/all_locales-1.4.13-%{locale_stamp}.tar.bz2
 Source2:	squirrelmail-RPM.readme
 Source3:	http://www.squirrelmail.org/plugins/address_add-2.1-1.4.0.tar.bz2
 Source4:	http://www.squirrelmail.org/plugins/block_sender.2.02-1.4.0.tar.bz2
 Source5:	http://www.squirrelmail.org/plugins/login_image-0.2.tar.bz2
-Source6:	http://www.squirrelmail.org/plugins/secure_login-1.2-1.2.8.tar.bz2
-Source7:	http://www.squirrelmail.org/plugins/compatibility-2.0.4.tar.bz2
-Source8:	http://www.squirrelmail.org/plugins/change_pass-2.7-1.4.x.tar.bz2
-Source9:	http://www.squirrelmail.org/plugins/quota_usage-1.3-1.2.7.tar.bz2
+Source6:	http://www.squirrelmail.org/plugins/secure_login-1.3-1.2.8.tar.bz2
+Source7:	http://www.squirrelmail.org/plugins/compatibility-2.0.11-1.0.tar.bz2
+Source8:	http://www.squirrelmail.org/plugins/change_pass-2.7a-1.4.x.tar.bz2
+Source9:	http://www.squirrelmail.org/plugins/quota_usage-1.3.1-1.2.7.tar.bz2
 # http://sourceforge.net/tracker/index.php?func=detail&aid=1255733&group_id=311&atid=300311
-Source10:	http://www.squirrelmail.org/plugins/change_ldappass-1.9.1.tar.bz2
+Source10:	http://www.squirrelmail.org/plugins/change_ldappass-2.2-1.4.0.tar.bz2
 Source11:	http://www.squirrelmail.org/plugins/avelsieve-1.0.1.tar.bz2
 Source12:	http://www.squirrelmail.org/plugins/windows-1.6-1.4.tar.bz2
 Source13:	http://www.squirrelmail.org/plugins/folder_sizes-1.5-1.4.0.tar.bz2
 Source14:	http://www.squirrelmail.org/plugins/archive_mail.1.2-1.4.2.tar.bz2
 Source15:	http://www.squirrelmail.org/plugins/empty_folders-1.2-1.2.tar.bz2
-Source16:	http://www.squirrelmail.org/plugins/abook_import_export-1.0-1.4.4.tar.bz2
+Source16:	http://www.squirrelmail.org/plugins/abook_import_export-1.1-1.4.4.tar.bz2
 Source17:	http://www.squirrelmail.org/plugins/ldifimport-1.4-1.2.x.tar.bz2
 Source18:	http://www.squirrelmail.org/plugins/username-2.3-1.0.0.tar.bz2
 Source19:	http://www.squirrelmail.org/plugins/bookmarks-2.0.3-1.4.1.tar.bz2
 Source20:	http://www.squirrelmail.org/plugins/select_range-3.5.tar.bz2
 Source21:	http://www.squirrelmail.org/plugins/rewrap.1.2-1.4.0.tar.bz2
-Source22:	http://www.squirrelmail.org/spam_buttons-1.0-1.4.tar.bz2
+Source22:	http://www.squirrelmail.org/spam_buttons-2.1-1.4.0.tar.bz2
 # http://sourceforge.net/projects/php-sa-mysql
 Source23:	http://prdownloads.sourceforge.net/php-sa-mysql/SquirrelSAP105.tar.bz2
 Source24:	http://squirrelmail.org/plugins/junkfolder-1.0.tar.bz2
@@ -286,6 +286,16 @@ Requires:	%{name} = %{version}
 
 %description	fr
 This add-on package provides French translation for
+Squirrelmail.
+
+%package	fy
+Summary:	Frisian language files for SquirrelMail
+Group:		System/Servers
+Requires:	locales-fy
+Requires:	%{name} = %{version}
+
+%description	fy
+This add-on package provides Frisian translation for
 Squirrelmail.
 
 %package	he
@@ -682,7 +692,7 @@ else
     popd
 fi
 pushd plugins/secure_login
-    cp -f config.php.sample config.php
+    cp -f config.sample.php config.php
 popd
 %patch6 -p0
 perl -pi -e "s|SM_PATH \. \'plugins/secure_login/config\.php\'|\'%{pluginetc}/secure_login_config\.php\'|g" plugins/secure_login/*.php
@@ -694,7 +704,7 @@ if [ -d plugins/compatibility ]; then
 else
     pushd plugins
 	tar -jxf %{SOURCE7}
-	patch -p0 < compatibility/patches/compatibility_patch-1.4.6.diff
+	patch -p1 < compatibility/patches/compatibility_patch-1.4.11.diff
 	rm -rf compatibility/patches compatibility/patches.old
 	rm -f compatibility/COPYING compatibility/make_release.sh compatibility/getpot
     popd
@@ -734,7 +744,7 @@ else
     popd
     pushd plugins/change_ldappass
 %patch10 -p0
-	cp -f config.php.sample config.php
+	cp -f config_sample.php config.php
 	perl -pi -e "s|SM_PATH \. \'config/config\.php\'|\'%{etcdir}/config\.php\'|g; \
 	    s|\"\.\./plugins/change_ldappass/config\.php\"|\'%{pluginetc}/change_ldappass_config\.php\'|g" *.php
     popd
@@ -890,7 +900,7 @@ else
 fi
 
 pushd plugins/spam_buttons
-    cp -p config.php.sample config.php
+    cp -p config.sample.php config.php
     rm -f getpot
     perl -pi -e "s|SM_PATH \. \'plugins/spam_buttons/config\.php\'|\'%{pluginetc}/spam_buttons_config\.php\'|g" *.php
 popd
@@ -973,7 +983,7 @@ cp %{SOURCE2} doc/RPM.readme
 find -type f | grep -v "\.gif"|grep -v "\.png"|grep -v "\.jpg"|grep -v "\.po"|grep -v "\.mo"|grep -v "\.wav"|xargs dos2unix -U
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 export DONT_RELINK=1
 
@@ -1198,7 +1208,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 %files -f exclude_pofiles.list
 %defattr(-,root,root)
@@ -1369,6 +1379,9 @@ fi
 %defattr(-,root,root)
 
 %files fr -f fr_FR.list
+%defattr(-,root,root)
+
+%files fy -f fy.list
 %defattr(-,root,root)
 
 %files he -f he_IL.list

@@ -17,8 +17,8 @@
 
 Summary:	Webmail client for PHP4
 Name:		squirrelmail
-Version:	1.4.13
-Release:	%mkrel 4
+Version:	1.4.15
+Release:	%mkrel 0.1
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
@@ -28,13 +28,13 @@ Source2:	squirrelmail-RPM.readme
 Source3:	http://www.squirrelmail.org/plugins/address_add-2.1-1.4.0.tar.bz2
 Source4:	http://www.squirrelmail.org/plugins/block_sender.2.02-1.4.0.tar.bz2
 Source5:	http://www.squirrelmail.org/plugins/login_image-0.2.tar.bz2
-Source6:	http://www.squirrelmail.org/plugins/secure_login-1.3-1.2.8.tar.bz2
+Source6:	http://www.squirrelmail.org/plugins/secure_login-1.4-1.2.8.tar.bz2
 Source7:	http://www.squirrelmail.org/plugins/compatibility-2.0.11-1.0.tar.bz2
 Source8:	http://www.squirrelmail.org/plugins/change_pass-2.7a-1.4.x.tar.bz2
 Source9:	http://www.squirrelmail.org/plugins/quota_usage-1.3.1-1.2.7.tar.bz2
 # http://sourceforge.net/tracker/index.php?func=detail&aid=1255733&group_id=311&atid=300311
 Source10:	http://www.squirrelmail.org/plugins/change_ldappass-2.2-1.4.0.tar.bz2
-Source11:	http://www.squirrelmail.org/plugins/avelsieve-1.0.1.tar.bz2
+Source11:	http://www.squirrelmail.org/plugins/avelsieve-1.9.7.tar.bz2
 Source12:	http://www.squirrelmail.org/plugins/windows-1.6-1.4.tar.bz2
 Source13:	http://www.squirrelmail.org/plugins/folder_sizes-1.5-1.4.0.tar.bz2
 Source14:	http://www.squirrelmail.org/plugins/archive_mail.1.2-1.4.2.tar.bz2
@@ -43,9 +43,9 @@ Source16:	http://www.squirrelmail.org/plugins/abook_import_export-1.1-1.4.4.tar.
 Source17:	http://www.squirrelmail.org/plugins/ldifimport-1.4-1.2.x.tar.bz2
 Source18:	http://www.squirrelmail.org/plugins/username-2.3-1.0.0.tar.bz2
 Source19:	http://www.squirrelmail.org/plugins/bookmarks-2.0.3-1.4.1.tar.bz2
-Source20:	http://www.squirrelmail.org/plugins/select_range-3.5.tar.bz2
+Source20:	http://www.squirrelmail.org/plugins/select_range-3.7-1.4.4.tar.bz2
 Source21:	http://www.squirrelmail.org/plugins/rewrap.1.2-1.4.0.tar.bz2
-Source22:	http://www.squirrelmail.org/spam_buttons-2.1-1.4.0.tar.bz2
+Source22:	http://www.squirrelmail.org/spam_buttons-2.2-1.4.0.tar.bz2
 # http://sourceforge.net/projects/php-sa-mysql
 Source23:	http://prdownloads.sourceforge.net/php-sa-mysql/SquirrelSAP105.tar.bz2
 Source24:	http://squirrelmail.org/plugins/junkfolder-1.0.tar.bz2
@@ -60,12 +60,11 @@ Patch6:		secure_login-stayinssl.patch
 Patch7:		squirrelmail-1.4.1-default_folder_prefix.patch
 Patch8:		squirrelmail-select_range.diff
 Patch10:	squirrelmail-1.4.6-ldappass.diff
-Patch11:	squirrelmail-1.4.3a-avelsieve-0.9.11.patch
+Patch11:	squirrelmail-avelsieve.diff
 Patch12:	squirrelmail-1.4.2-sqspell.patch
 Patch13:	squirrelmail-1.4.2-filters.patch
 Patch14:	squirrelmail-1.4.6-aspell.diff
 Patch17:	squirrelmail-1.4.4-log_failed_login_attempts.diff
-Patch18:	squirrelmail-sieve_syntax_error.patch
 Requires(pre): rpm-helper
 Requires(postun): rpm-helper
 Requires(pre):  apache-conf >= 2.0.54
@@ -760,12 +759,11 @@ else
 fi
 pushd plugins/avelsieve
 %patch11 -p0
-%patch18 -p3
-    cp -f config_sample.php config.php
+    cp -f config/config_sample.php config/config.php
     rm -rf po
     perl -pi -e "s|^include \"config\.php\"\;|include \'%{pluginetc}/avelsieve_config\.php\'\;|g; \
-	s|SM_PATH \. \'plugins/avelsieve/config\.php\'|\'%{pluginetc}/avelsieve_config\.php\'|g; \
-	s|SM_PATH \. \'plugins/junkfolder/config\.php\'|\'%{pluginetc}/junkfolder_config\.php\'|g" *.php
+	s|SM_PATH \. \'plugins/avelsieve/config/config\.php\'|\'%{pluginetc}/avelsieve_config\.php\'|g; \
+	s|SM_PATH \. \'plugins/junkfolder/config\.php\'|\'%{pluginetc}/junkfolder_config\.php\'|g" *.php include/*.php
 popd
 
 if [ -d plugins/windows ]; then
@@ -876,7 +874,7 @@ else
 fi
 
 pushd plugins/select_range
-    cp -p config.php.sample config.php
+    cp -p config.sample.php config.php
     rm -rf patch
     perl -pi -e "s|SM_PATH \. \'plugins/select_range/config\.php\'|\'%{pluginetc}/select_range_config\.php\'|g" *.php
 popd
@@ -1112,7 +1110,7 @@ install -m0644 %{mod_conf} %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d/%{mod
 
 # Move plugin config files
 mkdir -p %{buildroot}%{pluginetc}
-mv %{buildroot}%{basedir}/plugins/avelsieve/config.php %{buildroot}%{pluginetc}/avelsieve_config.php
+mv %{buildroot}%{basedir}/plugins/avelsieve/config/config.php %{buildroot}%{pluginetc}/avelsieve_config.php
 mv %{buildroot}%{basedir}/plugins/change_ldappass/config.php %{buildroot}%{pluginetc}/change_ldappass_config.php
 mv %{buildroot}%{basedir}/plugins/change_pass/settings.php %{buildroot}%{pluginetc}/change_pass_settings.php
 mv %{buildroot}%{basedir}/plugins/empty_folders/config.php %{buildroot}%{pluginetc}/empty_folders_config.php
@@ -1142,7 +1140,6 @@ ls -1d locale/*/|sed -e 's/locale\///'|sed -e 's/\///'> LOCALES
 # add some extra locales here
 cat >> LOCALES << EOF
 th_TH
-tl_PH
 uk_UA
 vi_VN
 EOF
@@ -1269,7 +1266,6 @@ rm -rf %{buildroot}
 %exclude %{basedir}/plugins/change_ldappass/locale
 %exclude %{basedir}/plugins/change_pass/locale
 %exclude %{basedir}/plugins/rewrap/locale
-%exclude %{basedir}/plugins/select_range/locale
 %{basedir}/plugins/index.php
 # bundled plugins
 %{basedir}/plugins/abook_take
@@ -1452,9 +1448,6 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 
 %files th -f th_TH.list
-%defattr(-,root,root)
-
-%files tl -f tl_PH.list
 %defattr(-,root,root)
 
 %files tr -f tr_TR.list

@@ -18,7 +18,7 @@
 Summary:	Webmail client for PHP4
 Name:		squirrelmail
 Version:	1.4.15
-Release:	%mkrel 0.1
+Release:	%mkrel 1
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/

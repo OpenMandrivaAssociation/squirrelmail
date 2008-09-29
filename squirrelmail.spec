@@ -18,7 +18,7 @@
 Summary:	Webmail client for PHP4
 Name:		squirrelmail
 Version:	1.4.16
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
@@ -65,6 +65,7 @@ Patch12:	squirrelmail-1.4.2-sqspell.patch
 Patch13:	squirrelmail-1.4.2-filters.patch
 Patch14:	squirrelmail-1.4.6-aspell.diff
 Patch17:	squirrelmail-1.4.4-log_failed_login_attempts.diff
+Patch18:	squirrelmail-broken_sql_auth_fix.diff
 Requires(pre): rpm-helper
 Requires(postun): rpm-helper
 Requires(pre):  apache-conf >= 2.0.54
@@ -451,16 +452,6 @@ Obsoletes:	%{name}-pt_BR
 This add-on package provides Portuguese and Brazilian Portuguese translation
 for Squirrelmail.
 
-#%package	pt_BR
-#Summary:	Brazilian Portuguese language files for SquirrelMail
-#Group:		System/Servers
-#Requires:	locales-pt_BR
-#Requires:	%{name} = %{version}
-
-#%description	pt_BR
-#This add-on package provides Brazilian Portuguese translation for
-#Squirrelmail.
-
 %package	ro
 Summary:	Romanian language files for SquirrelMail
 Group:		System/Servers
@@ -610,6 +601,7 @@ Squirrelmail.
 %patch12 -p1
 %patch14 -p0
 %patch17 -p0
+%patch18 -p0
 
 rm -f plugins/make_archive.pl
 

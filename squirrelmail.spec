@@ -17,7 +17,7 @@
 
 Summary:	Webmail client for PHP4
 Name:		squirrelmail
-Version:	1.4.15
+Version:	1.4.16
 Release:	%mkrel 1
 License:	GPL
 Group:		System/Servers
@@ -529,16 +529,6 @@ Requires:	%{name} = %{version}
 
 %description	th
 This add-on package provides Thai translation for
-Squirrelmail.
-
-%package	tl
-Summary:	Filipino language files for SquirrelMail
-Group:		System/Servers
-Requires:	locales-tl
-Requires:	%{name} = %{version}
-
-%description	tl
-This add-on package provides Filipino translation for
 Squirrelmail.
 
 %package	tr
@@ -1268,7 +1258,6 @@ rm -rf %{buildroot}
 %exclude %{basedir}/plugins/rewrap/locale
 %{basedir}/plugins/index.php
 # bundled plugins
-%{basedir}/plugins/abook_take
 %{basedir}/plugins/administrator
 %{basedir}/plugins/bug_report
 %{basedir}/plugins/calendar

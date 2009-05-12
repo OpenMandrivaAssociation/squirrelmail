@@ -1,3 +1,5 @@
+%define _requires_exceptions pear(class.JavaScriptPacker.php)
+
 %define mod_conf squirrelmail.conf
 
 # helps to find new languages
@@ -21,7 +23,7 @@ Version:	1.4.18
 %if %mdkversion < 201000
 %define subrel 1
 %endif
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
@@ -944,6 +946,7 @@ fi
 
 pushd plugins/javascript_libs
     perl -pi -e "s|SM_PATH \. \'plugins/javascript_libs/config\.php\'|\'%{pluginetc}/javascript_libs_config\.php\'|g" *.php
+    perl -pi -e "s|^#\!/usr/bin/php5|#\!/usr/bin/php|g" minify_offline.php
 popd
 
 if [ -d plugins/yubikey ]; then

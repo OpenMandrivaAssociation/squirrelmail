@@ -19,11 +19,11 @@
 
 Summary:	Webmail client for PHP4
 Name:		squirrelmail
-Version:	1.4.18
+Version:	1.4.19
 %if %mdkversion < 201000
 %define subrel 1
 %endif
-Release:	%mkrel 2
+Release:	%mkrel 1
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/

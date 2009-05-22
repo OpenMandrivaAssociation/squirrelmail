@@ -23,7 +23,7 @@ Version:	1.4.19
 %if %mdkversion < 201000
 %define subrel 1
 %endif
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
@@ -75,6 +75,7 @@ Patch13:	squirrelmail-1.4.2-filters.patch
 Patch14:	squirrelmail-1.4.6-aspell.diff
 Patch17:	squirrelmail-1.4.4-log_failed_login_attempts.diff
 Patch18:	squirrelmail-broken_sql_auth_fix.diff
+Patch19:	squirrelmail-1.4.19-more_mandriva_branding.diff
 Requires(pre): rpm-helper
 Requires(postun): rpm-helper
 Requires(pre):  apache-conf >= 2.0.54
@@ -616,6 +617,7 @@ rm -f plugins/make_archive.pl
 
 # branding :)
 install -m0644 %{SOURCE100} images/mandriva.png
+%patch19 -p0
 
 # hard code the path to the core config files
 
@@ -838,7 +840,6 @@ pushd plugins/username
     cp -f config.php.sample config.php
     perl -pi -e "s|SM_PATH \. \'plugins/username/config\.php\'|\'%{pluginetc}/username_config\.php\'|g; \
 	s|\.\./plugins/username/config\.php|%{pluginetc}/username_config\.php|g" *.php
-
 popd
 
 if [ -d plugins/bookmarks ]; then
@@ -927,7 +928,6 @@ pushd plugins/junkfolder
     rm -f po/xgetpo
     perl -pi -e "s|SM_PATH \. \'plugins/junkfolder/config\.php\'|\'%{pluginetc}/junkfolder_config\.php\'|g" config.php
 popd
-
 
 # Don't enable SPAM RBL by default
 pushd plugins/filters
@@ -1193,6 +1193,9 @@ find %{buildroot} -name "\.htaccess" | xargs rm -f
 # http://qa.mandriva.com/show_bug.cgi?id=27401
 install -d %{buildroot}%{basedir}/conf
 install -m0750 %{SOURCE25} %{buildroot}%{basedir}/conf/conf.pl
+
+# https://qa.mandriva.com/show_bug.cgi?id=51006
+mv doc/ReleaseNotes doc/ReleaseNotes.txt
 
 %post
 # Put correct hostname in config. We do this every time, since we change the

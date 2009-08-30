@@ -15,20 +15,20 @@
 # Plugin config files
 %define pluginetc %{etcdir}/plugins
 
-%define locale_stamp 20071220
+%define locale_stamp 20090526
 
 Summary:	Webmail client for PHP4
 Name:		squirrelmail
-Version:	1.4.19
+Version:	1.4.20
 %if %mdkversion < 201000
 %define subrel 1
 %endif
-Release:	%mkrel 2
+Release:	%mkrel 0.RC2.1
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
-Source0:	http://prdownloads.sf.net/squirrelmail/%{name}-%{version}.tar.bz2
-Source1:	http://prdownloads.sf.net/squirrelmail/all_locales-1.4.13-%{locale_stamp}.tar.bz2
+Source0:	http://prdownloads.sf.net/squirrelmail/%{name}-%{version}-RC2.tar.bz2
+Source1:	http://prdownloads.sf.net/squirrelmail/all_locales-1.4.18-%{locale_stamp}.tar.bz2
 Source2:	squirrelmail-RPM.readme
 Source3:	http://www.squirrelmail.org/plugins/address_add-2.1-1.4.0.tar.bz2
 Source4:	http://www.squirrelmail.org/plugins/block_sender.2.02-1.4.0.tar.bz2
@@ -148,14 +148,25 @@ Requires:	%{name} = %{version}
 This add-on package provides Bulgarian translation for
 Squirrelmail.
 
-%package	bn
-Summary:	Bengali language files for SquirrelMail
+%package	bn-india
+Summary:	Bengali (India) language files for SquirrelMail
+Group:		System/Servers
+Requires:	locales-bn
+Requires:	%{name} = %{version}
+Obsoletes:	%{name}-bn
+
+%description	bn-india
+This add-on package provides Bengali (India) translation for
+Squirrelmail.
+
+%package	bn-bangladesh
+Summary:	Bengali (Bangladesh) language files for SquirrelMail
 Group:		System/Servers
 Requires:	locales-bn
 Requires:	%{name} = %{version}
 
-%description	bn
-This add-on package provides Bengali translation for
+%description	bn-bangladesh
+This add-on package provides Bengali (Bangladesh) translation for
 Squirrelmail.
 
 %package	ca
@@ -216,16 +227,6 @@ Requires:	%{name} = %{version}
 
 %description	el
 This add-on package provides Greek translation for
-Squirrelmail.
-
-%package	en
-Summary:	British language files for SquirrelMail
-Group:		System/Servers
-Requires:	locales-en
-Requires:	%{name} = %{version}
-
-%description	en
-This add-on package provides British translation for
 Squirrelmail.
 
 %package	es
@@ -602,9 +603,49 @@ Requires:	%{name} = %{version}
 This add-on package provides Georgian translation for
 Squirrelmail.
 
+%package	km
+Summary:	Khmer language files for SquirrelMail
+Group:		System/Servers
+Requires:	locales-km
+Requires:	%{name} = %{version}
+
+%description	km
+This add-on package provides Khmer translation for
+Squirrelmail.
+
+%package	lv
+Summary:	Latvian language files for SquirrelMail
+Group:		System/Servers
+Requires:	locales-lv
+Requires:	%{name} = %{version}
+
+%description	lv
+This add-on package provides Latvian translation for
+Squirrelmail.
+
+%package	mk
+Summary:	Macedonian language files for SquirrelMail
+Group:		System/Servers
+Requires:	locales-mk
+Requires:	%{name} = %{version}
+
+%description	mk
+This add-on package provides Macedonian translation for
+Squirrelmail.
+
+%package	ta
+Summary:	Tamil language files for SquirrelMail
+Group:		System/Servers
+Requires:	locales-ta
+Requires:	%{name} = %{version}
+
+%description	ta
+This add-on package provides Tamil translation for
+Squirrelmail.
+
 %prep
 
-%setup -q -a1
+%setup -q -n %{name}-%{version}-RC2 -a1
 %patch0 -p0
 %patch7 -p1
 %patch8 -p1
@@ -1376,7 +1417,10 @@ rm -rf %{buildroot}
 %files bg -f bg_BG.list
 %defattr(-,root,root)
 
-%files bn -f bn_IN.list
+%files bn-india -f bn_IN.list
+%defattr(-,root,root)
+
+%files bn-bangladesh -f bn_BD.list
 %defattr(-,root,root)
 
 %files ca -f ca_ES.list
@@ -1395,9 +1439,6 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 
 %files el -f el_GR.list
-%defattr(-,root,root)
-
-%files en -f en_GB.list
 %defattr(-,root,root)
 
 %files es -f es_ES.list
@@ -1513,4 +1554,16 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 
 %files ka -f ka.list
+%defattr(-,root,root)
+
+%files km -f km.list
+%defattr(-,root,root)
+
+%files lv -f lv_LV.list
+%defattr(-,root,root)
+
+%files mk -f mk.list
+%defattr(-,root,root)
+
+%files ta -f ta_LK.list
 %defattr(-,root,root)

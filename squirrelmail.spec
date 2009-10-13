@@ -23,23 +23,24 @@ Version:	1.4.20
 %if %mdkversion < 201000
 %define subrel 1
 %endif
-Release:	%mkrel 0.RC2.1
+Release:	%mkrel 0.RC2.2
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
 Source0:	http://prdownloads.sf.net/squirrelmail/%{name}-%{version}-RC2.tar.bz2
 Source1:	http://prdownloads.sf.net/squirrelmail/all_locales-1.4.18-%{locale_stamp}.tar.bz2
 Source2:	squirrelmail-RPM.readme
+# http://squirrelmail.org/plugin_list.php
 Source3:	http://www.squirrelmail.org/plugins/address_add-2.1-1.4.0.tar.bz2
 Source4:	http://www.squirrelmail.org/plugins/block_sender.2.02-1.4.0.tar.bz2
 Source5:	http://www.squirrelmail.org/plugins/login_image-0.2.tar.bz2
 Source6:	http://www.squirrelmail.org/plugins/secure_login-1.4-1.2.8.tar.bz2
 Source7:	http://www.squirrelmail.org/plugins/compatibility-2.0.14-1.0.tar.bz2
-Source8:	http://www.squirrelmail.org/plugins/change_pass-2.7a-1.4.x.tar.bz2
+Source8:	http://www.squirrelmail.org/plugins/change_pass-3.0-1.4.0.tar.gz
 Source9:	http://www.squirrelmail.org/plugins/quota_usage-1.3.1-1.2.7.tar.bz2
 # http://sourceforge.net/tracker/index.php?func=detail&aid=1255733&group_id=311&atid=300311
 Source10:	http://www.squirrelmail.org/plugins/change_ldappass-2.2-1.4.0.tar.bz2
-Source11:	http://www.squirrelmail.org/plugins/avelsieve-1.9.8.tar.bz2
+Source11:	http://www.squirrelmail.org/plugins/avelsieve-1.9.9.tar.gz
 Source12:	http://www.squirrelmail.org/plugins/windows-1.6-1.4.tar.bz2
 Source13:	http://www.squirrelmail.org/plugins/folder_sizes-1.5-1.4.0.tar.bz2
 Source14:	http://www.squirrelmail.org/plugins/archive_mail.1.2-1.4.2.tar.bz2
@@ -48,9 +49,9 @@ Source16:	http://www.squirrelmail.org/plugins/abook_import_export-1.1-1.4.4.tar.
 Source17:	http://www.squirrelmail.org/plugins/ldifimport-1.4-1.2.x.tar.bz2
 Source18:	http://www.squirrelmail.org/plugins/username-2.3-1.0.0.tar.bz2
 Source19:	http://www.squirrelmail.org/plugins/bookmarks-2.0.3-1.4.1.tar.bz2
-Source20:	http://www.squirrelmail.org/plugins/select_range-3.7-1.4.4.tar.bz2
+Source20:	http://www.squirrelmail.org/plugins/select_range-3.7.1-1.4.4.tar.gz
 Source21:	http://www.squirrelmail.org/plugins/rewrap-1.3-1.4.0.tar.bz2
-Source22:	http://www.squirrelmail.org/spam_buttons-2.2-1.4.0.tar.bz2
+Source22:	http://www.squirrelmail.org/spam_buttons-2.3-1.4.0.tar.gz
 # http://sourceforge.net/projects/php-sa-mysql
 Source23:	http://prdownloads.sourceforge.net/php-sa-mysql/SquirrelSAP105.tar.bz2
 Source24:	http://squirrelmail.org/plugins/junkfolder-1.0.tar.bz2
@@ -748,12 +749,12 @@ if [ -d plugins/change_pass ]; then
     sleep 360
 else
     pushd plugins
-	tar -jxf %{SOURCE8}
-	rm -rf change_pass/courierpassd-*
-	rm -f change_pass/xm locale/Makefile
+	tar -zxf %{SOURCE8}
+	pushd change_pass
 %patch2 -p0
+	    perl -pi -e "s|SM_PATH \. \'plugins/change_pass/config.php\'|\'%{pluginetc}/change_pass_settings.php\'|g" *.php
+	popd
     popd
-perl -pi -e "s|SM_PATH \. \'plugins/change_pass/settings.php\'|\'%{pluginetc}/change_pass_settings.php\'|g" plugins/change_pass/*.php
 fi
 
 if [ -d plugins/quota_usage ]; then
@@ -788,7 +789,7 @@ if [ -d plugins/avelsieve ]; then
     sleep 360
 else
     pushd plugins
-	tar -jxf %{SOURCE11}
+	tar -zxf %{SOURCE11}
     popd
 fi
 pushd plugins/avelsieve
@@ -902,12 +903,12 @@ if [ -d plugins/select_range ]; then
     sleep 360
 else
     pushd plugins
-        tar -jxf %{SOURCE20}
+        tar -zxf %{SOURCE20}
     popd
 fi
 
 pushd plugins/select_range
-    cp -p config.sample.php config.php
+    cp -p config_example.php config.php
     rm -rf patch
     perl -pi -e "s|SM_PATH \. \'plugins/select_range/config\.php\'|\'%{pluginetc}/select_range_config\.php\'|g" *.php
 popd
@@ -930,14 +931,14 @@ if [ -d plugins/spam_buttons ]; then
     sleep 360
 else
     pushd plugins
-	tar -jxf %{SOURCE22}
+	tar -zxf %{SOURCE22}
     popd
 fi
 
 pushd plugins/spam_buttons
-    cp -p config.sample.php config.php
+    cp -p config_example.php config.php
     rm -f getpot
-    perl -pi -e "s|SM_PATH \. \'plugins/spam_buttons/config\.php\'|\'%{pluginetc}/spam_buttons_config\.php\'|g" *.php
+    perl -pi -e "s|\'\.\.\/\.\.\/config\/config_spam_buttons\.php\'|\'%{pluginetc}/spam_buttons_config\.php\'|g" functions.php
 popd
 
 if [ -d plugins/spamassassin ]; then
@@ -1182,7 +1183,7 @@ install -d %{buildroot}%{pluginetc}/avelsieve_rules
 mv %{buildroot}%{basedir}/plugins/avelsieve/config/rule.*.default.php %{buildroot}%{pluginetc}/avelsieve_rules/
 
 mv %{buildroot}%{basedir}/plugins/change_ldappass/config.php %{buildroot}%{pluginetc}/change_ldappass_config.php
-mv %{buildroot}%{basedir}/plugins/change_pass/settings.php %{buildroot}%{pluginetc}/change_pass_settings.php
+mv %{buildroot}%{basedir}/plugins/change_pass/config_example.php %{buildroot}%{pluginetc}/change_pass_config.php
 mv %{buildroot}%{basedir}/plugins/empty_folders/config.php %{buildroot}%{pluginetc}/empty_folders_config.php
 #mv %{buildroot}%{basedir}/plugins/folder_sizes/folder_sizes_config.php %{buildroot}%{pluginetc}/folder_sizes_config.php
 mv %{buildroot}%{basedir}/plugins/ldifimport/config.php %{buildroot}%{pluginetc}/ldifimport_config.php
@@ -1256,7 +1257,7 @@ ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %
 # try to fix the plugins config too
 ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %{pluginetc}/avelsieve_config.php --newfile %{pluginetc}/avelsieve_config.php.rpmnew
 ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %{pluginetc}/change_ldappass_config.php --newfile %{pluginetc}/change_ldappass_config.php.rpmnew
-ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %{pluginetc}/change_pass_settings.php --newfile %{pluginetc}/change_pass_settings.php.rpmnew
+ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %{pluginetc}/change_pass_config.php --newfile %{pluginetc}/change_pass_config.php.rpmnew
 ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %{pluginetc}/empty_folders_config.php --newfile %{pluginetc}/empty_folders_config.php.rpmnew
 #ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %{pluginetc}/folder_sizes_config.php --newfile %{pluginetc}/folder_sizes_config.php.rpmnew
 ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %{pluginetc}/ldifimport_config.php --newfile %{pluginetc}/ldifimport_config.php.rpmnew
@@ -1304,7 +1305,7 @@ rm -rf %{buildroot}
 %attr(0755,root,apache) %dir %{pluginetc}/avelsieve_rules
 %attr(0644,root,root) %config(noreplace) %{pluginetc}/avelsieve_rules/rule.*.default.php
 %attr(0644,root,root) %config(noreplace) %{pluginetc}/change_ldappass_config.php
-%attr(0644,root,root) %config(noreplace) %{pluginetc}/change_pass_settings.php
+%attr(0644,root,root) %config(noreplace) %{pluginetc}/change_pass_config.php
 %attr(0644,root,root) %config(noreplace) %{pluginetc}/empty_folders_config.php
 #%attr(0644,root,root) %config(noreplace) %{pluginetc}/folder_sizes_config.php
 %attr(0644,root,root) %config(noreplace) %{pluginetc}/ldifimport_config.php
@@ -1349,7 +1350,6 @@ rm -rf %{buildroot}
 %exclude %{basedir}/plugins/address_add/locale
 %exclude %{basedir}/plugins/avelsieve/locale
 %exclude %{basedir}/plugins/change_ldappass/locale
-%exclude %{basedir}/plugins/change_pass/locale
 %{basedir}/plugins/index.php
 # bundled plugins
 %{basedir}/plugins/administrator

@@ -1,4 +1,4 @@
-%define _requires_exceptions pear(class.JavaScriptPacker.php)
+%define _requires_exceptions pear(\\(class.JavaScriptPacker.php\\|/etc/squirrelmail/plugins/change_pass_settings.php\\))
 
 %define mod_conf squirrelmail.conf
 
@@ -23,7 +23,7 @@ Version:	1.4.20
 %if %mdkversion < 201000
 %define subrel 1
 %endif
-Release:	%mkrel 0.RC2.2
+Release:	%mkrel 0.RC2.3
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
@@ -94,7 +94,6 @@ Requires:	poppassd-ceti
 Requires:	tmpwatch >= 2.8
 # We use ccp to upgrade our config file when possible
 Requires(post):	ccp >= 0.4.0
-BuildRequires:	dos2unix
 BuildArch:	noarch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
@@ -1042,9 +1041,6 @@ for f in contrib/RPM/squirrelmail.cron contrib/RPM/config.php.redhat; do
 done
 
 cp %{SOURCE2} doc/RPM.readme
-
-# strip away annoying ^M
-find -type f | grep -v "\.gif"|grep -v "\.png"|grep -v "\.jpg"|grep -v "\.po"|grep -v "\.mo"|grep -v "\.wav"|xargs dos2unix -U
 
 %install
 rm -rf %{buildroot}

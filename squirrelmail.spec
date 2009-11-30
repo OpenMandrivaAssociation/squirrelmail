@@ -23,7 +23,7 @@ Version:	1.4.20
 %if %mdkversion < 201000
 %define subrel 1
 %endif
-Release:	%mkrel 0.RC2.3
+Release:	%mkrel 0.RC2.4
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
@@ -1118,7 +1118,8 @@ Alias /%{name} %{basedir}
 
 <Directory %{basedir}>
 
-    Allow from all
+    Order allow,deny
+    Allow from localhost
 
     <IfModule mod_php4.c>
 	php_admin_value session.bug_compat_42 0

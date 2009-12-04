@@ -1,7 +1,5 @@
 %define _requires_exceptions pear(\\(class.JavaScriptPacker.php\\|/etc/squirrelmail/plugins/change_pass_settings.php\\))
 
-%define mod_conf squirrelmail.conf
-
 # helps to find new languages
 %define _unpackaged_files_terminate_build 0
 
@@ -94,6 +92,7 @@ Requires:	poppassd-ceti
 Requires:	tmpwatch >= 2.8
 # We use ccp to upgrade our config file when possible
 Requires(post):	ccp >= 0.4.0
+BuildRequires:  rpm-mandriva-setup >= 1.23
 BuildArch:	noarch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
@@ -1111,7 +1110,8 @@ cp -rp po %{buildroot}%{basedir}
 # install the cron script
 install -m 0755 contrib/RPM/squirrelmail.cron %{buildroot}/%{crondir}
 
-cat <<EOF > %{mod_conf}
+install -d -m 755 %{buildroot}%{_webappconfdir}
+cat > %{buildroot}%{_webappconfdir}/%{name}.conf <<EOF
 # squirrelmail.conf
 
 Alias /%{name} %{basedir}
@@ -1122,55 +1122,19 @@ Alias /%{name} %{basedir}
     Deny from all
     ErrorDocument 403 "Access denied per %{_webappconfdir}/%{name}.conf"
 
-    <IfModule mod_php4.c>
-	php_admin_value session.bug_compat_42 0
-# Otherwise can't send mails
-	php_admin_value safe_mode 0
-# Misc
-	php_flag register_globals	off
-# Other increased PHP parameters
-	php_admin_value memory_limit    64M
-	php_admin_value post_max_size   17M
-	php_admin_value upload_max_filesize 16M
-	php_admin_value max_execution_time 120
-    </IfModule>
-
-    <IfModule mod_php5.c>
-	php_admin_value session.bug_compat_42 0
-# Otherwise can't send mails
-	php_admin_value safe_mode 0
-# Misc
-	php_flag register_globals	off
-# Other increased PHP parameters
-	php_admin_value memory_limit    64M
-	php_admin_value post_max_size   17M
-	php_admin_value upload_max_filesize 16M
-	php_admin_value max_execution_time 120
-    </IfModule>
-
-## To force https connection
-#    <IfModule mod_ssl.c>
-#	SSLRequireSSL
-#	SSLRequire %{SSL_CIPHER_USEKEYSIZE} >= 128
-#    </IfModule>
-
-#<LocationMatch /%{name}>
-#    Options FollowSymLinks
-#    RewriteEngine on
-#    RewriteCond %{SERVER_PORT} !^443$
-#    RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
-#</LocationMatch>
-
+    php_admin_value session.bug_compat_42 0
+    # Otherwise can't send mails
+    php_admin_value safe_mode 0
+    # Misc
+    php_flag register_globals	off
+    # Other increased PHP parameters
+    php_admin_value memory_limit    64M
+    php_admin_value post_max_size   17M
+    php_admin_value upload_max_filesize 16M
+    php_admin_value max_execution_time 120
 </Directory>
-
 EOF
 
-# fix web access
-%if %mdkversion < 1020
-install -m0644 %{mod_conf} %{buildroot}%{_sysconfdir}/httpd/conf.d/%{mod_conf}
-%else
-install -m0644 %{mod_conf} %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d/%{mod_conf}
-%endif
 
 # Move plugin config files
 mkdir -p %{buildroot}%{pluginetc}
@@ -1289,11 +1253,7 @@ rm -rf %{buildroot}
 %files -f exclude_pofiles.list
 %defattr(-,root,root)
 %doc doc/* contrib
-%if %mdkversion < 1020
-%attr(644,root,root) %config(noreplace) %{_sysconfdir}/httpd/conf.d/%{mod_conf}
-%else
-%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/%{mod_conf}
-%endif
+%config(noreplace) %{_webappconfdir}/%{name}.conf
 %dir %{etcdir}
 %attr(0644,root,root) %config(noreplace) %{etcdir}/config.php
 %attr(0644,root,root) %config(noreplace) %{etcdir}/config_default.php

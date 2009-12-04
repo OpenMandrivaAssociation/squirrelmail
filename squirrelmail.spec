@@ -23,7 +23,7 @@ Version:	1.4.20
 %if %mdkversion < 201000
 %define subrel 1
 %endif
-Release:	%mkrel 0.RC2.4
+Release:	%mkrel 0.RC2.5
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
@@ -1117,9 +1117,10 @@ cat <<EOF > %{mod_conf}
 Alias /%{name} %{basedir}
 
 <Directory %{basedir}>
-
     Order allow,deny
-    Allow from localhost
+    Allow from 127.0.0.1
+    Deny from all
+    ErrorDocument 403 "Access denied per %{_webappconfdir}/%{name}.conf"
 
     <IfModule mod_php4.c>
 	php_admin_value session.bug_compat_42 0

@@ -21,7 +21,7 @@ Version:	1.4.20
 %if %mdkversion < 201000
 %define subrel 1
 %endif
-Release:	%mkrel 0.RC2.5
+Release:	%mkrel 0.RC2.6
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
@@ -75,17 +75,9 @@ Patch14:	squirrelmail-1.4.6-aspell.diff
 Patch17:	squirrelmail-1.4.4-log_failed_login_attempts.diff
 Patch18:	squirrelmail-broken_sql_auth_fix.diff
 Patch19:	squirrelmail-1.4.19-more_mandriva_branding.diff
-Requires(pre): rpm-helper
-Requires(postun): rpm-helper
-Requires(pre):  apache-conf >= 2.0.54
-Requires(pre):  apache-mpm >= 2.0.54
-Requires:	apache-conf >= 2.0.54
-Requires:	apache-mpm >= 2.0.54
 Requires:	apache-mod_php
 Requires:	sendmail-command
 Requires:	aspell
-Requires:	bash
-Requires:	perl
 Requires:	php-imap
 Requires:	php-ldap
 Requires:	poppassd-ceti

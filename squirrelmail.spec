@@ -1228,16 +1228,14 @@ ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %
 ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %{pluginetc}/yubikey_config.php --newfile %{pluginetc}/yubikey_config.php.rpmnew
 ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %{pluginetc}/yubikey_glogal_config.php --newfile %{pluginetc}/yubikey_glogal_config.php.rpmnew
 
-if [ -f /var/lock/subsys/httpd ]; then
-    %{_initrddir}/httpd restart 1>&2;
-fi
+%if %mdkversion < 201010
+%_post_webapp
+%endif
 
 %postun
-if [ "$1" = "0" ]; then
-    if [ -f /var/lock/subsys/httpd ]; then
-	%{_initrddir}/httpd restart 1>&2
-    fi
-fi
+%if %mdkversion < 201010
+%_postun_webapp
+%endif
 
 %clean
 rm -rf %{buildroot}

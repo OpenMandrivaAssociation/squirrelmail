@@ -21,11 +21,11 @@ Version:	1.4.20
 %if %mdkversion < 201000
 %define subrel 1
 %endif
-Release:	%mkrel 0.RC2.6
+Release:	%mkrel 1
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
-Source0:	http://prdownloads.sf.net/squirrelmail/%{name}-%{version}-RC2.tar.bz2
+Source0:	http://prdownloads.sf.net/squirrelmail/%{name}-%{version}.tar.gz
 Source1:	http://prdownloads.sf.net/squirrelmail/all_locales-1.4.18-%{locale_stamp}.tar.bz2
 Source2:	squirrelmail-RPM.readme
 # http://squirrelmail.org/plugin_list.php
@@ -636,7 +636,7 @@ Squirrelmail.
 
 %prep
 
-%setup -q -n %{name}-%{version}-RC2 -a1
+%setup -q -n %{name}-%{version} -a1
 %patch0 -p0
 %patch7 -p1
 %patch8 -p1

@@ -15,13 +15,19 @@
 
 %define locale_stamp 20090526
 
+%if %mandriva_branch == Cooker
+# Cooker
+%define release %mkrel 2
+%else
+# Old distros
+%define subrel 2
+%define release %mkrel 0
+%endif
+
 Summary:	Webmail client for PHP4
 Name:		squirrelmail
 Version:	1.4.20
-%if %mdkversion < 201000
-%define subrel 1
-%endif
-Release:	%mkrel 1
+Release:	%release
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
@@ -75,6 +81,7 @@ Patch14:	squirrelmail-1.4.6-aspell.diff
 Patch17:	squirrelmail-1.4.4-log_failed_login_attempts.diff
 Patch18:	squirrelmail-broken_sql_auth_fix.diff
 Patch19:	squirrelmail-1.4.19-more_mandriva_branding.diff
+Patch100:	squirrelmail-1.4.20-CVE-2010-1637.diff
 Requires:	apache-mod_php
 Requires:	sendmail-command
 Requires:	aspell
@@ -1031,6 +1038,12 @@ for f in contrib/RPM/squirrelmail.cron contrib/RPM/config.php.redhat; do
     perl -pi -e "s|__ATTDIR__|%{attdir}|g;s|__PREFSDIR__|%{prefsdir}|g;" $f
 done
 
+%patch100 -p1
+pushd plugins/mail_fetch
+    cp -f config_example.php mail_fetch_config.php
+    perl -pi -e "s|SM_PATH \. \'plugins/mail_fetch/config\.php\'|\'%{pluginetc}/mail_fetch_config\.php\'|g" *.php
+popd
+
 cp %{SOURCE2} doc/RPM.readme
 
 %install
@@ -1153,6 +1166,7 @@ mv %{buildroot}%{basedir}/plugins/abook_import_export/config_default.php %{build
 mv %{buildroot}%{basedir}/plugins/javascript_libs/config.php %{buildroot}%{pluginetc}/javascript_libs_config.php
 mv %{buildroot}%{basedir}/plugins/yubikey/config_example.php %{buildroot}%{pluginetc}/yubikey_config.php
 cp %{buildroot}%{pluginetc}/yubikey_config.php %{buildroot}%{pluginetc}/yubikey_glogal_config.php
+mv %{buildroot}%{basedir}/plugins/mail_fetch/mail_fetch_config.php %{buildroot}%{pluginetc}/mail_fetch_config.php
 
 # wrong locale name, would never be used, and it is duplicated with a
 # correct name (just "pl")
@@ -1227,6 +1241,7 @@ ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %
 ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %{pluginetc}/javascript_libs_config.php --newfile %{pluginetc}/javascript_libs_config.php.rpmnew
 ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %{pluginetc}/yubikey_config.php --newfile %{pluginetc}/yubikey_config.php.rpmnew
 ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %{pluginetc}/yubikey_glogal_config.php --newfile %{pluginetc}/yubikey_glogal_config.php.rpmnew
+ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %{pluginetc}/mail_fetch_config.php --newfile %{pluginetc}/mail_fetch_config.php.rpmnew
 
 %if %mdkversion < 201010
 %_post_webapp
@@ -1269,6 +1284,7 @@ rm -rf %{buildroot}
 %attr(0644,root,root) %config(noreplace) %{pluginetc}/javascript_libs_config.php
 %attr(0644,root,root) %config(noreplace) %{pluginetc}/yubikey_config.php
 %attr(0644,root,root) %config(noreplace) %{pluginetc}/yubikey_glogal_config.php
+%attr(0644,root,root) %config(noreplace) %{pluginetc}/mail_fetch_config.php
 %dir %{basedir}
 %dir %{varlibdir}
 %dir %{varspooldir}

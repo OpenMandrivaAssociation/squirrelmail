@@ -17,16 +17,16 @@
 
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 2
+%define release %mkrel 1
 %else
 # Old distros
-%define subrel 2
+%define subrel 1
 %define release %mkrel 0
 %endif
 
 Summary:	Webmail client for PHP4
 Name:		squirrelmail
-Version:	1.4.20
+Version:	1.4.21
 Release:	%release
 License:	GPL
 Group:		System/Servers
@@ -81,7 +81,6 @@ Patch14:	squirrelmail-1.4.6-aspell.diff
 Patch17:	squirrelmail-1.4.4-log_failed_login_attempts.diff
 Patch18:	squirrelmail-broken_sql_auth_fix.diff
 Patch19:	squirrelmail-1.4.19-more_mandriva_branding.diff
-Patch100:	squirrelmail-1.4.20-CVE-2010-1637.diff
 Requires:	apache-mod_php
 Requires:	sendmail-command
 Requires:	aspell
@@ -1038,7 +1037,6 @@ for f in contrib/RPM/squirrelmail.cron contrib/RPM/config.php.redhat; do
     perl -pi -e "s|__ATTDIR__|%{attdir}|g;s|__PREFSDIR__|%{prefsdir}|g;" $f
 done
 
-%patch100 -p1
 pushd plugins/mail_fetch
     cp -f config_example.php mail_fetch_config.php
     perl -pi -e "s|SM_PATH \. \'plugins/mail_fetch/config\.php\'|\'%{pluginetc}/mail_fetch_config\.php\'|g" *.php

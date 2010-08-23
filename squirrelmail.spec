@@ -17,11 +17,15 @@
 
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 1
+%define release %mkrel 2
 %else
 # Old distros
 %define subrel 1
-%define release %mkrel 0
+%define release %mkrel 1
+%endif
+
+%if %{mdkversion} < 200610
+%define _webappconfdir %{_sysconfdir}/httpd/conf/webapps.d
 %endif
 
 Summary:	Webmail client for PHP4
@@ -90,7 +94,12 @@ Requires:	poppassd-ceti
 Requires:	tmpwatch >= 2.8
 # We use ccp to upgrade our config file when possible
 Requires(post):	ccp >= 0.4.0
+BuildRequires:  
+%if %{mdkversion} < 200610
+BuildRequires:  rpm-mandriva-setup >= 1.5
+%else
 BuildRequires:  rpm-mandriva-setup >= 1.23
+%endif
 BuildArch:	noarch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 

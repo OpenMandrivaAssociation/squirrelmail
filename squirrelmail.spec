@@ -94,7 +94,6 @@ Requires:	poppassd-ceti
 Requires:	tmpwatch >= 2.8
 # We use ccp to upgrade our config file when possible
 Requires(post):	ccp >= 0.4.0
-BuildRequires:  
 %if %{mdkversion} < 200610
 BuildRequires:  rpm-mandriva-setup >= 1.5
 %else

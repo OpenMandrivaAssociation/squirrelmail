@@ -17,7 +17,7 @@
 
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 2
+%define release %mkrel 1
 %else
 # Old distros
 %define subrel 1
@@ -30,12 +30,12 @@
 
 Summary:	Webmail client for PHP4
 Name:		squirrelmail
-Version:	1.4.21
+Version:	1.4.22
 Release:	%release
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
-Source0:	http://prdownloads.sf.net/squirrelmail/%{name}-%{version}.tar.gz
+Source0:	http://prdownloads.sf.net/squirrelmail/%{name}-webmail-%{version}.tar.gz
 Source1:	http://prdownloads.sf.net/squirrelmail/all_locales-1.4.18-%{locale_stamp}.tar.bz2
 Source2:	squirrelmail-RPM.readme
 # http://squirrelmail.org/plugin_list.php
@@ -650,7 +650,7 @@ Squirrelmail.
 
 %prep
 
-%setup -q -n %{name}-%{version} -a1
+%setup -q -n %{name}-webmail-%{version} -a1
 %patch0 -p0
 %patch7 -p1
 %patch8 -p1

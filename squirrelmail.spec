@@ -959,6 +959,8 @@ else
 	rm -rf SquirrelSAP*
     popd
 perl -pi -e "s|SM_PATH \. \'plugins/spamassassin/config\.php\'|\'%{pluginetc}/spamassassin_config\.php\'|g" plugins/spamassassin/*.php
+perl -pi -e "s|define\(\'SM_PATH\', \'\.\./\.\./\'\)\;||g" plugins/spamassassin/setup.php
+
 fi
 
 if [ -d plugins/junkfolder ]; then

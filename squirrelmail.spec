@@ -15,13 +15,15 @@
 
 %define locale_stamp 20090526
 
+%define snap r14325
+
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 2
+%define release %mkrel 0.0.%{snap}.1
 %else
 # Old distros
-%define subrel 2
-%define release %mkrel 1
+%define subrel 1
+%define release %mkrel 0.0.%{snap}.1
 %endif
 
 %if %{mdkversion} < 200610
@@ -30,12 +32,13 @@
 
 Summary:	Webmail client for PHP4
 Name:		squirrelmail
-Version:	1.4.22
+Version:	1.4.23
 Release:	%release
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
-Source0:	http://prdownloads.sf.net/squirrelmail/%{name}-webmail-%{version}.tar.gz
+#Source0:	http://prdownloads.sf.net/squirrelmail/%{name}-webmail-%{version}.tar.gz
+Source0:	squirrelmail.tar.gz
 Source1:	http://prdownloads.sf.net/squirrelmail/all_locales-1.4.18-%{locale_stamp}.tar.bz2
 Source2:	squirrelmail-RPM.readme
 # http://squirrelmail.org/plugin_list.php
@@ -650,7 +653,13 @@ Squirrelmail.
 
 %prep
 
-%setup -q -n %{name}-webmail-%{version} -a1
+#setup -q -n %{name}-webmail-%{version} -a1
+%setup -q -n squirrelmail -a1
+
+for i in `find . -type d -name .svn`; do
+    if [ -e "$i" ]; then rm -rf $i; fi >&/dev/null
+done
+
 %patch0 -p0
 %patch7 -p1
 %patch8 -p1
@@ -1215,6 +1224,13 @@ install -m0750 %{SOURCE25} %{buildroot}%{basedir}/conf/conf.pl
 # https://qa.mandriva.com/show_bug.cgi?id=51006
 mv doc/ReleaseNotes doc/ReleaseNotes.txt
 
+# cleanup
+rm -f %{buildroot}%{basedir}/plugins/address_add/locale/he_HE/LC_MESSAGES/address_add.mo
+rm -f %{buildroot}%{basedir}/plugins/address_add/locale/compileall.pl
+rm -f %{buildroot}%{basedir}/plugins/address_add/locale/index.php
+rm -f %{buildroot}%{basedir}/plugins/address_add/locale/no_NO/LC_MESSAGES/address_add.mo
+rm -f %{buildroot}%{basedir}/plugins/change_ldappass/locale/no_NO/LC_MESSAGES/change_ldappass.mo
+
 %post
 # Put correct hostname in config. We do this every time, since we change the
 # .rpmnew as well. This is safe even if someone already modified the config,
@@ -1296,6 +1312,11 @@ rm -rf %{buildroot}
 %dir %{basedir}
 %dir %{varlibdir}
 %dir %{varspooldir}
+%dir %{basedir}/conf
+%dir %{basedir}/help
+%dir %{basedir}/images
+%dir %{basedir}/locale
+%dir %{basedir}/plugins
 %{basedir}/class
 %{basedir}/functions
 %{basedir}/help/en_US
@@ -1322,6 +1343,8 @@ rm -rf %{buildroot}
 %exclude %{basedir}/plugins/address_add/locale
 %exclude %{basedir}/plugins/avelsieve/locale
 %exclude %{basedir}/plugins/change_ldappass/locale
+%exclude %{basedir}/plugins/junkfolder/locale/el_GR/LC_MESSAGES/junkfolder.mo
+%exclude %{basedir}/plugins/quota_usage/locale/it_IT/LC_MESSAGES/quota_usage.mo
 %{basedir}/plugins/index.php
 # bundled plugins
 %{basedir}/plugins/administrator

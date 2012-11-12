@@ -1,0 +1,20 @@
+--- plugins/squirrelspell/sqspell_config.php	2006-02-24 00:40:25.000000000 +0100
++++ plugins/squirrelspell/sqspell_config.php.oden	2006-02-24 00:43:52.000000000 +0100
+@@ -23,12 +23,12 @@
+  * $SQSPELL_APP = array( 'English' => 'ispell -a',
+  *                     'Spanish' => 'ispell -d spanish -a' );
+  * You can replace ispell with aspell keeping the same commandline:
+- * $SQSPELL_APP = array( 'English' => 'aspell -a',
+- *                     'Spanish' => 'aspell -d spanish -a' );
++ * $SQSPELL_APP = array( 'English' => 'aspell -a --lang=en',
++ *                     'Spanish' => 'aspell -a --lang=es' );
+  */
+-$SQSPELL_APP = array('English' => 'ispell -a',
+-			'Spanish' => 'ispell -d spanish -a',
+-			'Italian' => 'ispell -d italian -a');
++$SQSPELL_APP = array('English' => 'aspell -a --lang=en',
++			'Spanish' => 'aspell -a --lang=es',
++			'Italian' => 'aspell -a --lang=it');
+ $SQSPELL_APP_DEFAULT = 'English';
+ $SQSPELL_WORDS_FILE = 
+    getHashedFile($username, $data_dir, "$username.words");

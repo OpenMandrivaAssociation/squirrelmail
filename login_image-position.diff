@@ -1,0 +1,72 @@
+diff -Naur plugins/login_image/README plugins/login_image.oden/README
+--- plugins/login_image/README	2002-05-06 21:12:56.000000000 +0200
++++ plugins/login_image.oden/README	2006-06-10 15:58:48.000000000 +0200
+@@ -1,32 +1,24 @@
+ Revision history - see bottom
+ 
+ This plugin will display a random image on the main login page,
+-above the username/password fields.  Images are chosen randomly from
+-any GIF, JPG, or PNG files placed in this plugin directory.  If no image
++below the username/password fields.  Images are chosen randomly from
++any GIF, JPG, or PNG files placed in its plugin directory.  If no image
+ files are found, the daily image from www.webshots.com is displayed.  Makes
+ a nice way to keep your login page "fresh".
+ 
+ To install the plugin:
+ 
+-  1.  Change to the plugins directory.
++  1.  Go to the config directory and run conf.pl
+ 
+-        $ cd plugins/
+-
+-  2.  Unarchive the plugin.
+-
+-        $ tar zxvf /your/path/to/login_image-x.x.tgz
+-
+-  2.  This should create a login_image/ directory under plugins.
+-
+-  4.  Go to the config directory and run conf.pl
+-
+-        $ cd ../../config/
++        $ cd /var/www/squirrelmail/config/
+         $ ./conf.pl
+ 
+-  5.  Choose option 8 and proceed to add the new plugin following
++  2.  Choose option 8 and proceed to add the new plugin following
+       the instructions there.  Save and exit, and your plugin should
+       be in place.
+ 
++  3.  Place your images in /var/www/squirrelmail/plugins/login_image/
++
+ 
+ Any questions or problems, feel free to contact me:
+ 
+diff -Naur plugins/login_image/setup.php plugins/login_image.oden/setup.php
+--- plugins/login_image/setup.php	2002-05-06 21:12:56.000000000 +0200
++++ plugins/login_image.oden/setup.php	2006-06-10 16:00:15.000000000 +0200
+@@ -1,11 +1,11 @@
+-<?php
+-
+-    function squirrelmail_plugin_init_login_image() {
+-        global $squirrelmail_plugin_hooks;
+-
+-        $squirrelmail_plugin_hooks['login_top']['login_image'] = 'getimage';
+-    }
+-
++<?php
++
++    function squirrelmail_plugin_init_login_image() {
++        global $squirrelmail_plugin_hooks;
++
++        $squirrelmail_plugin_hooks['login_bottom']['login_image'] = 'getimage';
++    }
++
+ 	function ran($max) {
+ 		static $startseed = 0;
+ 		if (!$startseed) {
+@@ -49,4 +49,4 @@
+ 
+         echo '<p><center><img src="' . $img . '"></center></p>';
+     }
+-?>
++?>

@@ -1,0 +1,11 @@
+--- setup.php	2009-05-12 10:51:43.000000000 +0200
++++ setup.php.oden	2009-05-12 10:52:05.000000000 +0200
+@@ -47,7 +47,7 @@
+  * @global bool $AllowSpamFilters
+  */
+ global $AllowSpamFilters;
+-$AllowSpamFilters = true;
++$AllowSpamFilters = false;
+ 
+ /**
+  * SpamFilters YourHop Setting

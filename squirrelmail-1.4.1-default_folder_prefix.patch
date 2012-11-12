@@ -1,0 +1,24 @@
+diff -Naur squirrelmail-1.4.18/config/conf.pl squirrelmail-1.4.18.oden/config/conf.pl
+--- squirrelmail-1.4.18/config/conf.pl	2009-04-13 18:52:57.000000000 +0200
++++ squirrelmail-1.4.18.oden/config/conf.pl	2009-05-12 10:46:37.000000000 +0200
+@@ -3566,7 +3566,7 @@
+             $continue = 1;
+         } elsif ( $server eq "uw" ) {
+             $imap_server_type               = "uw";
+-            $default_folder_prefix          = "mail/";
++            $default_folder_prefix          = "";
+             $trash_folder                   = "Trash";
+             $sent_folder                    = "Sent";
+             $draft_folder                   = "Drafts";
+diff -Naur squirrelmail-1.4.18/contrib/RPM/config.php.redhat squirrelmail-1.4.18.oden/contrib/RPM/config.php.redhat
+--- squirrelmail-1.4.18/contrib/RPM/config.php.redhat	2009-04-13 18:52:57.000000000 +0200
++++ squirrelmail-1.4.18.oden/contrib/RPM/config.php.redhat	2009-05-12 10:46:37.000000000 +0200
+@@ -37,7 +37,7 @@
+ $invert_time            = false;
+ $optional_delimiter     = '/';
+ 
+-$default_folder_prefix          = 'mail/';
++$default_folder_prefix          = '';
+ $trash_folder                   = 'Trash';
+ $sent_folder                    = 'Sent';
+ $draft_folder                   = 'Drafts';

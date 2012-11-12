@@ -1,0 +1,59 @@
+--- config/config_sample.php	2009-05-29 10:24:15.000000000 +0200
++++ config/config_sample.php.oden	2009-10-13 16:52:07.000000000 +0200
+@@ -167,7 +167,7 @@
+ global $avelsieve_imapproxymode, $avelsieve_imapproxyserv;
+ $avelsieve_imapproxymode = false;
+ $avelsieve_imapproxyserv = array(
+-	'localhost' => 'imap.example.org'
++	'localhost' => '__HOSTNAME__'
+ );
+ 
+ /** @var boolean Ldapuserdata mode: Gets user's email addresses (including
+@@ -229,10 +229,11 @@
+  'From', 'To', 'Cc', 'Bcc', 'Subject', 'Reply-To', 'Sender', 'List-Id',
+  'MailingList', 'Mailing-List', 'X-ML-Name', 'X-List', 'X-List-Name', 'X-Mailing-List',
+  'Resent-From',  'Resent-To', 'X-Mailer', 'X-Mailing-List',
+- 'X-Spam-Flag', 'X-Spam-Status',
+- 'X-Priority', 'Importance', 'X-MSMail-Priority', 'Precedence',
++ 'X-Spam-Flag', 'X-Spam-Status', 'X-Spam-Level', 'X-Spam-Score',
++ 'X-Priority', 'Importance', 'X-MSMail-Priority', 'Precedence', 'X-Envelope-To',
+  'Return-Path', 'Received', 'Auto-Submitted',
+- 'X-Spam-Flag', 'X-Spam-Status','X-Spam-Tests'
++ 'X-Spam-Flag', 'X-Spam-Status','X-Spam-Tests',
++ 'X-Original-To', 'X-AMaViS-Alert', 'X-Quarantine-id', 'X-BeenThere', 'List-Owner', 'List-Post'
+  );
+ 
+ /* Available :method's for the :notify extension (if applicable) */
+--- include/avelsieve_action_redirect.class.php	2009-05-29 10:24:15.000000000 +0200
++++ include/avelsieve_action_redirect.class.php.oden	2009-10-13 16:54:36.000000000 +0200
+@@ -23,7 +23,7 @@
+         $this->text = _("Redirect");
+         $this->helptxt = _("Automatically redirect the message to a different email address");
+         $this->options = array(
+-            'redirectemail' => _("someone@example.org"),
++            'redirectemail' => _("someone@__HOSTNAME__"),
+             'keep' => ''
+         );
+         $this->avelsieve_action($s, $rule);
+--- include/constants.inc.php	2009-05-29 10:24:15.000000000 +0200
++++ include/constants.inc.php.oden	2009-10-13 16:53:32.000000000 +0200
+@@ -144,7 +144,7 @@
+ }
+ 
+ global $implemented_capabilities;
+-$implemented_capabilities = array('fileinto', 'envelope', 'reject', 'vacation', 'imapflags', 'imap4flags', 'relational', 'regex', 'notify', 'body', 'date', 'index');
++$implemented_capabilities = array('fileinto', 'envelope', 'reject', 'vacation', 'imapflags', 'imap4flags', 'relational', 'regex', 'notify', 'body', 'date', 'index', 'subaddress');
+ 
+ global $cap_dependencies;  
+ $cap_dependencies['relational'] = array("comparator-i;ascii-numeric");
+--- setup.php	2009-05-29 10:24:15.000000000 +0200
++++ setup.php.oden	2009-10-13 16:52:39.000000000 +0200
+@@ -56,7 +56,7 @@
+     textdomain ('avelsieve');
+ 
+     $optpage_blocks[] = array(
+-        'name' => _("Message Filters"),
++        'name' => _("Message Filters (sieve)"),
+         'url'  => '../plugins/avelsieve/table.php',
+         'desc' => _("Server-Side mail filtering enables you to add criteria in order to automatically forward, delete or place a given message into a folder."),
+         'js'   => false

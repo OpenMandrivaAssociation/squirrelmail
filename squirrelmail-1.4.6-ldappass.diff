@@ -1,0 +1,22 @@
+--- config_sample.php	2007-07-21 08:56:42.000000000 +0200
++++ config_sample.php.oden	2008-05-10 18:14:51.000000000 +0200
+@@ -84,7 +84,7 @@
+  * USE THIS IF YOU DON'T CARE ABOUT SECURITY.
+  */
+ $ldap_bind_as_manager = false;
+-$ldap_manager_dn="cn=manager,$ldap_base_dn";
++$ldap_manager_dn="cn=root,$ldap_base_dn";
+ $ldap_manager_pw='secret';
+ 
+ // Configuration for Samba-LDAP passwords (changes via CLI)
+--- setup.php	2007-07-29 17:27:52.000000000 +0200
++++ setup.php.oden	2008-05-10 18:16:17.000000000 +0200
+@@ -25,7 +25,7 @@
+   global $optpage_blocks;
+     $optpage_blocks[] =
+        array(
+-             'name' => _("Change Password"),
++             'name' => _("Change LDAP Password"),
+              'url'  => '../plugins/change_ldappass/options.php',
+              'desc' => _("This connects to your local Password Server to change your login password for all services."));
+   bindtextdomain('squirrelmail', SM_PATH . 'locale');

@@ -1,0 +1,11 @@
+--- plugins/secure_login/config.php	2009-05-12 10:50:21.000000000 +0200
++++ plugins/secure_login/config.php.oden	2009-05-12 10:50:43.000000000 +0200
+@@ -21,7 +21,7 @@
+    // if you want user sessions to remain in SSL for their entire duration, 
+    // set the following to zero:
+    //
+-   $change_back_to_http_after_login = 1;
++   $change_back_to_http_after_login = 0;
+ 
+ 
+ 

@@ -1,0 +1,13 @@
+diff -Naur squirrelmail-1.4.18/plugins/squirrelspell/sqspell_config.php squirrelmail-1.4.18.oden/plugins/squirrelspell/sqspell_config.php
+--- squirrelmail-1.4.18/plugins/squirrelspell/sqspell_config.php	2009-04-16 00:00:49.000000000 +0200
++++ squirrelmail-1.4.18.oden/plugins/squirrelspell/sqspell_config.php	2009-05-12 10:49:27.000000000 +0200
+@@ -27,7 +27,8 @@
+  *                     'Spanish' => 'aspell -d spanish -a' );
+  */
+ $SQSPELL_APP = array('English' => 'ispell -a',
+-			'Spanish' => 'ispell -d spanish -a');
++			'Spanish' => 'ispell -d spanish -a',
++			'Italian' => 'ispell -d italian -a');
+ $SQSPELL_APP_DEFAULT = 'English';
+ $SQSPELL_WORDS_FILE = 
+    getHashedFile($username, $data_dir, "$username.words");

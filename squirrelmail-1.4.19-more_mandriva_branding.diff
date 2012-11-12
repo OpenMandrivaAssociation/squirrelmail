@@ -1,0 +1,26 @@
+--- contrib/RPM/config.php.redhat	2009-05-22 23:12:59.000000000 +0200
++++ contrib/RPM/config.php.redhat.oden	2009-05-22 23:19:11.000000000 +0200
+@@ -9,17 +9,17 @@
+ $config_version = '1.4.0';
+ $config_use_color = 1;
+ 
+-$org_name      = "SquirrelMail";
+-$org_logo      = SM_PATH . 'images/sm_logo.png';
+-$org_logo_width  = '308';
+-$org_logo_height = '111';
++$org_name      = "Mandriva";
++$org_logo      = SM_PATH . 'images/mandriva.png';
++$org_logo_width  = '306';
++$org_logo_height = '56';
+ $org_title     = "SquirrelMail $version";
+ $signout_page  = '';
+ $frame_top     = '_top';
+ 
+-$provider_uri     = 'http://squirrelmail.org/';
++$provider_uri     = 'http://mandriva.com/';
+ 
+-$provider_name     = 'SquirrelMail';
++$provider_name     = 'Mandriva Linux';
+ 
+ $motd = "";
+ 

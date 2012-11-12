@@ -1,0 +1,50 @@
+--- config/config_default.php	2009-04-13 18:52:57.000000000 +0200
++++ config/config_default.php.oden	2009-05-12 10:45:36.000000000 +0200
+@@ -32,25 +32,25 @@
+  * Organization's name
+  * @global string $org_name
+  */
+-$org_name = "SquirrelMail";
++$org_name = "Mandriva";
+ 
+ /**
+  * Organization's logo picture (blank if none)
+  * @global string $org_logo
+  */
+-$org_logo = SM_PATH . 'images/sm_logo.png';
++$org_logo = SM_PATH . 'images/mandriva.png';
+ 
+ /**
+  * The width of the logo (0 for default)
+  * @global string $org_logo_width
+  */
+-$org_logo_width = '308';
++$org_logo_width = '306';
+ 
+ /**
+  * The height of the logo (0 for default)
+  * @global string $org_logo_height
+  */
+-$org_logo_height = '111';
++$org_logo_height = '56';
+ 
+ /**
+  * Webmail Title
+@@ -92,7 +92,7 @@
+  * option set to true.
+  * @global string $provider_name
+  */
+-$provider_name = 'SquirrelMail';
++$provider_name = 'Mandriva Linux';
+ 
+ /**
+  * Provider URI
+@@ -103,7 +103,7 @@
+  * option set to true.
+  * @global string $provider_uri
+  */
+-$provider_uri = 'http://squirrelmail.org/';
++$provider_uri = 'http://www.mandriva.com/';
+ 
+ /*** Server Settings ***/
+ /**

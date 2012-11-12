@@ -1,0 +1,32 @@
+diff -Naur squirrelmail-1.4.15/functions/forms.php squirrelmail-1.4.15.oden/functions/forms.php
+--- squirrelmail-1.4.15/functions/forms.php	2008-04-30 01:27:48.000000000 +0200
++++ squirrelmail-1.4.15.oden/functions/forms.php	2008-06-26 19:42:47.000000000 +0200
+@@ -41,6 +41,7 @@
+  */
+ function addCheckBox($name, $checked = false, $value = null, $extra_attributes='') {
+     return addInputField('checkbox', $name, $value,
++        concat_hook_function('checkbox_extra_params', $name) . ' ' .
+         ($checked ? ' checked="checked"' : '') . $extra_attributes);
+ }
+ 
+diff -Naur squirrelmail-1.4.15/functions/mailbox_display.php squirrelmail-1.4.15.oden/functions/mailbox_display.php
+--- squirrelmail-1.4.15/functions/mailbox_display.php	2008-02-10 17:49:47.000000000 +0100
++++ squirrelmail-1.4.15.oden/functions/mailbox_display.php	2008-06-26 19:42:47.000000000 +0200
+@@ -208,7 +208,7 @@
+             case 1: /* checkbox */
+                 echo html_tag( 'td',
+                                "<input type=\"checkbox\" name=\"msg[$t]\" id=\"msg".$msg['ID'].
+-                                   "\" value=\"".$msg['ID']."\"$checked>",
++                                   "\" value=\"".$msg['ID']."\"$checked " . concat_hook_function('checkbox_extra_params', "msg[$t]") . ">",
+                                'center',
+                                $hlt_color );
+                 break;
+@@ -973,6 +973,8 @@
+         $result .= "</a>\n";
+     }
+ 
++    $result .= concat_hook_function('mailbox_selectall_after');
++
+     /* Return our final result. */
+     return ($result);
+ }

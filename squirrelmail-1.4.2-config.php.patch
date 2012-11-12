@@ -1,0 +1,39 @@
+--- contrib/RPM/config.php.redhat	2009-04-13 18:52:57.000000000 +0200
++++ contrib/RPM/config.php.redhat.oden	2009-05-22 23:30:26.000000000 +0200
+@@ -1,7 +1,7 @@
+ <?php
+ 
+ /**
+- * SquirrelMail Configuration File
++ * SquirrelMail Configuration File for Mandriva Linux
+  * Created using the configure script, conf.pl
+  */
+ 
+@@ -25,7 +25,7 @@
+ 
+ $squirrelmail_default_language = 'en_US';
+ 
+-$domain                 = 'localhost';
++$domain                 = '__HOSTNAME__';
+ $imapServerAddress      = 'localhost';
+ $imapPort               = 143;
+ $useSendmail            = true;
+@@ -75,6 +75,18 @@
+ $plugins[0] = 'delete_move_next';
+ $plugins[1] = 'squirrelspell';
+ $plugins[2] = 'newmail';
++$plugins[3] = 'filters';
++$plugins[4] = 'address_add';
++$plugins[5] = 'change_pass';
++$plugins[6] = 'quota_usage';
++$plugins[7] = 'change_ldappass';
++$plugins[8] = 'windows';
++$plugins[9] = 'folder_sizes';
++$plugins[10] = 'archive_mail';
++$plugins[11] = 'empty_folders';
++#$plugins[12] = 'secure_login';
++#$plugins[13] = 'mail_fetch';
++#$plugins[14] = 'block_sender';
+ 
+ $theme_css = '';
+ $theme_default = 0;

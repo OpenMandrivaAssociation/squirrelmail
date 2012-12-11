@@ -1562,3 +1562,166 @@ rm -rf %{buildroot}
 
 %files ta -f ta_LK.list
 %defattr(-,root,root)
+
+
+%changelog
+* Sat Jun 30 2012 Oden Eriksson <oeriksson@mandriva.com> 1.4.23-0.0.r14325.1mdv2012.0
++ Revision: 807613
+- use a recent svn snap for better php-5.4.x support
+- various fixes
+
+* Tue Jul 26 2011 Oden Eriksson <oeriksson@mandriva.com> 1.4.22-2
++ Revision: 691724
+- bump release
+- fix one borked define in plugins/spamassassin/setup.php
+
+* Sun Jul 17 2011 Oden Eriksson <oeriksson@mandriva.com> 1.4.22-1
++ Revision: 690201
+- 1.4.22
+
+* Mon Aug 23 2010 Oden Eriksson <oeriksson@mandriva.com> 1.4.21-2mdv2011.0
++ Revision: 572135
+- fix borkiness
+- make it backportable to cs4
+
+* Sun Aug 22 2010 Oden Eriksson <oeriksson@mandriva.com> 1.4.21-1mdv2011.0
++ Revision: 571996
+- 1.4.21
+
+* Mon Jun 21 2010 Oden Eriksson <oeriksson@mandriva.com> 1.4.20-2mdv2010.1
++ Revision: 548376
+- P100: security fix for CVE-2010-1637
+
+* Sun Mar 07 2010 Oden Eriksson <oeriksson@mandriva.com> 1.4.20-1mdv2010.1
++ Revision: 515447
+- 1.4.20
+
+* Tue Jan 19 2010 Guillaume Rousse <guillomovitch@mandriva.org> 1.4.20-0.RC2.6mdv2010.1
++ Revision: 493883
+- rely on filetrigger for reloading apache configuration begining with 2010.1, rpm-helper macros otherwise
+- cleanup useless explicit dependencies
+
+* Fri Dec 04 2009 Guillaume Rousse <guillomovitch@mandriva.org> 1.4.20-0.RC2.5mdv2010.1
++ Revision: 473478
+- drop support for old mdk 10.2
+- drop php4 support in apache configuration
+- better apache configuration
+
+* Mon Nov 30 2009 Guillaume Rousse <guillomovitch@mandriva.org> 1.4.20-0.RC2.4mdv2010.1
++ Revision: 472110
+- restrict default access permissions to localhost only, as per new policy
+
+* Fri Oct 30 2009 Guillaume Rousse <guillomovitch@mandriva.org> 1.4.20-0.RC2.3mdv2010.1
++ Revision: 460277
+- fix automatic dependencies
+- don't duplicate spec-helper job
+
+* Tue Oct 13 2009 Oden Eriksson <oeriksson@mandriva.com> 1.4.20-0.RC2.2mdv2010.0
++ Revision: 457148
+- update some plugins, adjust patches and spec file
+
+* Sun Aug 30 2009 Oden Eriksson <oeriksson@mandriva.com> 1.4.20-0.RC2.1mdv2010.0
++ Revision: 422405
+- 1.4.20-RC2
+- fix new locales (1.4.18-20090526) packaging
+
+* Fri May 22 2009 Oden Eriksson <oeriksson@mandriva.com> 1.4.19-2mdv2010.0
++ Revision: 378861
+- don't assume avelsieve is running (deactivate the plugin)
+- fix branding (again)
+- fix #51006 (squirrelmail 1.4.18 update package does not work)
+
+* Fri May 22 2009 Frederik Himpe <fhimpe@mandriva.org> 1.4.19-1mdv2010.0
++ Revision: 378677
+- update to new version 1.4.19
+
+* Tue May 12 2009 Oden Eriksson <oeriksson@mandriva.com> 1.4.18-2mdv2010.0
++ Revision: 375045
+- fix deps
+
+* Tue May 12 2009 Oden Eriksson <oeriksson@mandriva.com> 1.4.18-1mdv2010.0
++ Revision: 374902
+- 1.4.18 (security release)
+- avelsieve-1.9.8
+- compatibility-2.0.14
+- rewrap-1.3-1.4.0
+- empty_folders-2.0.1-1.2
+- javascript_libs-0.1.2 (new)
+- yubikey-0.8.1-1.4.0 (new)
+- rediffed patches
+
+* Thu Dec 04 2008 Oden Eriksson <oeriksson@mandriva.com> 1.4.17-1mdv2009.1
++ Revision: 309936
+- 1.4.17 (Minor security fixes)
+
+* Wed Nov 26 2008 Adam Williamson <awilliamson@mandriva.org> 1.4.16-3mdv2009.1
++ Revision: 306845
+- fix erroneous duplicate closing colon/bracket in avelsieve.diff (#45598)
+
+* Mon Sep 29 2008 Oden Eriksson <oeriksson@mandriva.com> 1.4.16-2mdv2009.0
++ Revision: 289730
+- disable broken code for now
+
+* Mon Sep 29 2008 Oden Eriksson <oeriksson@mandriva.com> 1.4.16-1mdv2009.0
++ Revision: 289209
+- 1.4.16 (fixes CVE-2008-3663)
+
+* Thu Jul 24 2008 Oden Eriksson <oeriksson@mandriva.com> 1.4.15-1mdv2009.0
++ Revision: 244556
+- bump release
+
+* Thu Jun 26 2008 Oden Eriksson <oeriksson@mandriva.com> 1.4.15-0.1mdv2009.0
++ Revision: 229347
+- 1.4.15
+- secure_login-1.4-1.2.8
+- avelsieve-1.9.7
+- select_range-3.7-1.4.4
+- spam_buttons-2.2-1.4.0
+- rediffed P11
+- dropped redundant P18
+
+* Sat May 10 2008 Oden Eriksson <oeriksson@mandriva.com> 1.4.13-4mdv2009.0
++ Revision: 205411
+- new locales (1.4.13-20071220)
+- added the frisian language sub package
+- updated secure_login-1.2-1.2.8 -> secure_login-1.3-1.2.8
+- updated compatibility-2.0.4 -> compatibility-2.0.11-1.0
+- updated change_pass-2.7-1.4.x -> change_pass-2.7a-1.4.x
+- updated quota_usage-1.3-1.2.7 -> quota_usage-1.3.1-1.2.7
+- updated change_ldappass-1.9.1 -> change_ldappass-2.2-1.4.0
+- updated abook_import_export-1.0-1.4.4 -> abook_import_export-1.1-1.4.4
+- updated spam_buttons-1.0-1.4 -> spam_buttons-2.1-1.4.0
+- rediffed needed patches
+
+* Mon Feb 18 2008 Thierry Vignaud <tv@mandriva.org> 1.4.13-3mdv2008.1
++ Revision: 171125
+- rebuild
+- fix "foobar is blabla" summary (=> "blabla") so that it looks nice in rpmdrake
+
+* Thu Jan 03 2008 Andreas Hasenack <andreas@mandriva.com> 1.4.13-2mdv2008.1
++ Revision: 143138
+- dropped numeric prefix from config file (#36385)
+- dropped /webmail non-standard alias (#36385)
+
+  + Olivier Blin <blino@mandriva.org>
+    - restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Sat Dec 15 2007 Oden Eriksson <oeriksson@mandriva.com> 1.4.13-1mdv2008.1
++ Revision: 120370
+- 1.4.13 (remote exploit fixes)
+
+* Sat Sep 29 2007 Oden Eriksson <oeriksson@mandriva.com> 1.4.11-1mdv2008.0
++ Revision: 93848
+- 1.4.11 (Minor bugfixes)
+
+* Mon Jun 25 2007 Oden Eriksson <oeriksson@mandriva.com> 1.4.10a-2mdv2008.0
++ Revision: 43871
+- fix deps
+
+* Thu May 10 2007 Oden Eriksson <oeriksson@mandriva.com> 1.4.10a-1mdv2008.0
++ Revision: 25969
+- 1.4.10a
+

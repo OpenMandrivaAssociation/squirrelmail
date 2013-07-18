@@ -1,4 +1,7 @@
-%define _requires_exceptions pear(\\(class.JavaScriptPacker.php\\|/etc/squirrelmail/plugins/change_pass_settings.php\\))
+# These ones don't show up with now
+#%define __noautoreq pear(\\(class.JavaScriptPacker.php\\|/etc/squirrelmail/plugins/change_pass_settings.php\\))
+
+%define __noautoreq '/usr/bin/php'
 
 # helps to find new languages
 %define _unpackaged_files_terminate_build 0
@@ -19,15 +22,11 @@
 
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 0.0.%{snap}.1
+%define release %mkrel 0.0.%{snap}.3
 %else
 # Old distros
-%define subrel 1
-%define release %mkrel 0.0.%{snap}.1
-%endif
-
-%if %{mdkversion} < 200610
-%define _webappconfdir %{_sysconfdir}/httpd/conf/webapps.d
+%define subrel 2
+%define release %mkrel 0.0.%{snap}.3
 %endif
 
 Summary:	Webmail client for PHP4
@@ -103,7 +102,6 @@ BuildRequires:  rpm-mandriva-setup >= 1.5
 BuildRequires:  rpm-mandriva-setup >= 1.23
 %endif
 BuildArch:	noarch
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 SquirrelMail is a standards-based webmail package written in PHP4. It
@@ -1064,8 +1062,6 @@ popd
 cp %{SOURCE2} doc/RPM.readme
 
 %install
-rm -rf %{buildroot}
-
 export DONT_RELINK=1
 
 install -d %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d
@@ -1139,9 +1135,7 @@ cat > %{buildroot}%{_webappconfdir}/%{name}.conf <<EOF
 Alias /%{name} %{basedir}
 
 <Directory %{basedir}>
-    Order allow,deny
-    Allow from 127.0.0.1
-    Deny from all
+    Require host localhost.localdomain
     ErrorDocument 403 "Access denied per %{_webappconfdir}/%{name}.conf"
 
     php_admin_value session.bug_compat_42 0
@@ -1267,17 +1261,6 @@ ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %
 ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %{pluginetc}/yubikey_glogal_config.php --newfile %{pluginetc}/yubikey_glogal_config.php.rpmnew
 ccp --delete --ifexists --set "NoOrphans" --ignoreopt config_version --oldfile %{pluginetc}/mail_fetch_config.php --newfile %{pluginetc}/mail_fetch_config.php.rpmnew
 
-%if %mdkversion < 201010
-%_post_webapp
-%endif
-
-%postun
-%if %mdkversion < 201010
-%_postun_webapp
-%endif
-
-%clean
-rm -rf %{buildroot}
 
 %files -f exclude_pofiles.list
 %defattr(-,root,root)

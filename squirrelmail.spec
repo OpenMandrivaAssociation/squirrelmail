@@ -20,19 +20,10 @@
 
 %define snap r14325
 
-%if %mandriva_branch == Cooker
-# Cooker
-%define release %mkrel 0.0.%{snap}.3
-%else
-# Old distros
-%define subrel 2
-%define release %mkrel 0.0.%{snap}.3
-%endif
-
 Summary:	Webmail client for PHP4
 Name:		squirrelmail
 Version:	1.4.23
-Release:	%release
+Release:	0.0.%{snap}.4
 License:	GPL
 Group:		System/Servers
 URL:		http://www.squirrelmail.org/
@@ -1135,7 +1126,7 @@ cat > %{buildroot}%{_webappconfdir}/%{name}.conf <<EOF
 Alias /%{name} %{basedir}
 
 <Directory %{basedir}>
-    Require host localhost.localdomain
+    Require local granted
     ErrorDocument 403 "Access denied per %{_webappconfdir}/%{name}.conf"
 
     php_admin_value session.bug_compat_42 0

@@ -26,7 +26,7 @@ Version:	1.4.23
 Release:	0.0.%{snap}.4
 License:	GPL
 Group:		System/Servers
-URL:		http://www.squirrelmail.org/
+URL:		https://www.squirrelmail.org/
 #Source0:	http://prdownloads.sf.net/squirrelmail/%{name}-webmail-%{version}.tar.gz
 Source0:	squirrelmail.tar.gz
 Source1:	http://prdownloads.sf.net/squirrelmail/all_locales-1.4.18-%{locale_stamp}.tar.bz2
